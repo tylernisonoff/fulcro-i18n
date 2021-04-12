@@ -21,6 +21,7 @@
     [com.fulcrologic.fulcro.data-fetch :as df]
     [taoensso.timbre :as log]
     [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
+    [com.fulcrologic.fulcro.raw.components :as rc]
     [clojure.string :as str]
     #?@(:clj ([com.fulcrologic.fulcro-i18n.gettext :as gt]
               [clojure.java.io :as io]))))
@@ -99,14 +100,14 @@
   "
   ([string]
    (let [k           ["" string]
-         translation (get-in comp/*shared* [::translations k] string)]
+         translation (get-in rc/*shared* [::translations k] string)]
      (if (= "" translation) string translation)))
   ([string {:keys [::context] :as options}]
    (let [k           [(or context "") string]
-         locale      (get-in comp/*shared* [::locale] :en)  ; some locale needed or formatter might crash
-         entry       (get-in comp/*shared* [::translations k] string)
+         locale      (get-in rc/*shared* [::locale] :en)  ; some locale needed or formatter might crash
+         entry       (get-in rc/*shared* [::translations k] string)
          translation (if (= "" entry) string entry)
-         formatter   (get comp/*shared* ::message-formatter (fn [{:keys [::localized-format-string]}] localized-format-string))]
+         formatter   (get rc/*shared* ::message-formatter (fn [{:keys [::localized-format-string]}] localized-format-string))]
      (if (empty? (dissoc options ::context))
        translation
        (try
@@ -237,5 +238,5 @@
       "
      [message-formatter locale & render-body]
      `(let [shared-props# (merge {:com.fulcrologic.fulcro-i18n.i18n/message-formatter ~message-formatter} ~locale)]
-        (binding [comp/*shared* shared-props#]
+        (binding [rc/*shared* shared-props#]
           ~@render-body))))

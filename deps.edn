@@ -14,7 +14,8 @@
                         :extra-deps  {thheller/shadow-cljs        {:mvn/version "2.11.5"}
                                       org.clojure/clojure         {:mvn/version "1.10.1" :scope "provided"}
                                       org.clojure/clojurescript   {:mvn/version "1.10.773" :scope "provided"}
-                                      com.fulcrologic/fulcro      {:mvn/version "3.4.3"}
+                                      com.fulcrologic/fulcro      {:git/url "https://github.com/fulcrologic/fulcro.git"
+                                                                   :sha "2b5dff2e9f34ff6f47a5f1bcc36bc088a14c552d"}
                                       org.clojure/tools.nrepl     {:mvn/version "0.2.13"}
                                       binaryage/devtools          {:mvn/version "1.0.0"}
                                       org.clojure/tools.namespace {:mvn/version "1.0.0"}}}
